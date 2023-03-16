@@ -51,6 +51,23 @@ bool actuacionJugador(unsigned char celda_inicial, unsigned char celda_fin, Acti
         monitor.get_entidad(0)->Cogio_Zapatillas(false);
         // monitor.finalizarJuego();
         // monitor.setMostrarResultados(true);
+        // Si reaparece en casillas especiales aplicamos efecto
+        if (celdaRand == 'X')
+        { // Casilla Rosa (Recarga)
+          monitor.get_entidad(0)->increaseBateria(10);
+        }
+        else if (celdaRand == 'D')
+        { // Casilla Morada (Zapatillas)
+          monitor.get_entidad(0)->Cogio_Zapatillas(true);
+        }
+        else if (celdaRand == 'K')
+        { // Casilla Amarilla (Bikini)
+          monitor.get_entidad(0)->Cogio_Bikini(true);
+        }
+        else if (celdaRand == 'G')
+        { // Casilla celeste claro (GPS)
+          monitor.get_entidad(0)->notify();
+        }
 
         break;
       case 'G': // Casilla celeste claro (GPS)
@@ -205,6 +222,24 @@ bool actuacionNPC(unsigned int entidad, unsigned char celda, Action accion, unsi
         monitor.get_entidad(0)->setHitbox(true);
         monitor.get_entidad(0)->Cogio_Bikini(false);
         monitor.get_entidad(0)->Cogio_Zapatillas(false);
+
+        // Si reaparece en casillas especiales aplicamos efecto
+        if (celdaRand == 'X')
+        { // Casilla Rosa (Recarga)
+          monitor.get_entidad(0)->increaseBateria(10);
+        }
+        else if (celdaRand == 'D')
+        { // Casilla Morada (Zapatillas)
+          monitor.get_entidad(0)->Cogio_Zapatillas(true);
+        }
+        else if (celdaRand == 'K')
+        { // Casilla Amarilla (Bikini)
+          monitor.get_entidad(0)->Cogio_Bikini(true);
+        }
+        else if (celdaRand == 'G')
+        { // Casilla celeste claro (GPS)
+          monitor.get_entidad(0)->notify();
+        }
       }
       break;
 
