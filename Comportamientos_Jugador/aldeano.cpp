@@ -11,7 +11,7 @@ Action ComportamientoAldeano::think(Sensores sensores) {
 	case 1: accion = actTURN_SL; break;
 	case 2: accion = actTURN_BR; break;
 	case 3: case 4: case 5: case 6: case 7: 
-		if (sensores.terreno[2] != 'j') accion = actFORWARD;
+		if (sensores.superficie[2] != 'j') accion = actFORWARD;
 		break;
   }
 
