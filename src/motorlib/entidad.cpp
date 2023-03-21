@@ -77,8 +77,9 @@ Action Entidad::think(int acc, vector<vector<unsigned char>> vision, int level)
         sensor.posF = -1;
         sensor.posC = -1;
         sensor.sentido = norte;
-        setNotifyOff();
       }
+      setNotifyOff();
+
 /*      if (level >= 2)
       {
         if (getTiempo() > 0 and !hasToNotify())

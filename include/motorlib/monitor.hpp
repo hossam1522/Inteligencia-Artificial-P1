@@ -107,5 +107,7 @@ public:
 
   double CoincidenciaConElMapa();
   void PintaEstadoMonitor();
+  void init_casillas_especiales(unsigned int f, unsigned int c);
+
 };
 #endif

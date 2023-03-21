@@ -410,6 +410,8 @@ void botonConfigurarSimCANCEL(int valor)
   botonConfigurarSimOK(1);
   MMmode = 0;
   panelSelecMapaConfig->close();
+  monitor.init_casillas_especiales(monitor.get_entidad(0)->getFil(), monitor.get_entidad(0)->getCol());
+
 }
 
 void botonConfigurarNuevoMapaCB(int valor)
@@ -500,7 +502,7 @@ void botonConfigurarNuevoMapaCB(int valor)
   setup2 = panelSelecMapaConfig->add_spinner_to_panel(obj_subpanel0, "     Columna ", GLUI_SPINNER_INT, &posC);
   setup2->set_int_limits(0, num_col, GLUI_LIMIT_WRAP);
   setup6 = panelSelecMapaConfig->add_spinner_to_panel(obj_subpanel0, " Orientacion ", GLUI_SPINNER_INT, &orienta);
-  setup6->set_int_limits(0, 4, GLUI_LIMIT_WRAP);
+  setup6->set_int_limits(0, 8, GLUI_LIMIT_WRAP);
   GLUI_Panel *obj_subpanel1 = panelSelecMapaConfig->add_panel_to_panel(obj_panel, "Parametros");
   setup5 = panelSelecMapaConfig->add_spinner_to_panel(obj_subpanel1, "    Numero Aldeanos ", GLUI_SPINNER_INT, &naldeanos);
   setup5->set_int_limits(0, num_filas, GLUI_LIMIT_WRAP);
@@ -755,6 +757,8 @@ void lanzar_motor_grafico_verOnline(int argc, char **argv, EnLinea &argumentos)
   monitor.get_entidad(0)->Cogio_Zapatillas(false);
   monitor.setPasos(1);
   monitor.setRetardo(0);
+  monitor.init_casillas_especiales(argumentos.fil_inicial, argumentos.col_inicial);
+
 
   glutInit(&argc, argv);
   // Mode Setting
