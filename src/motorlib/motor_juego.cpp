@@ -356,6 +356,7 @@ void nucleo_motor_juego(MonitorJuego &monitor, int acc)
 
   if (monitor.get_entidad(0)->ready())
   {
+    monitor.init_casillas_especiales(monitor.get_entidad(0)->getFil(),monitor.get_entidad(0)->getCol());
     clock_t t0 = clock();
     accion = monitor.get_entidad(0)->think(acc, estado[0], monitor.getLevel());
     clock_t t1 = clock();
