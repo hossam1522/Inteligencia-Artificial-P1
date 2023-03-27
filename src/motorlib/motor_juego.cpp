@@ -319,8 +319,6 @@ bool actuacion(unsigned int entidad, Action accion)
     f = f - 1;
     c = c - 1;
     break;
-
-
   }
 
   celda_fin = monitor.getMapa()->getCelda(f, c);
@@ -356,7 +354,8 @@ void nucleo_motor_juego(MonitorJuego &monitor, int acc)
 
   if (monitor.get_entidad(0)->ready())
   {
-    monitor.init_casillas_especiales(monitor.get_entidad(0)->getFil(),monitor.get_entidad(0)->getCol());
+    monitor.init_casillas_especiales(monitor.get_entidad(0)->getFil(), monitor.get_entidad(0)->getCol());
+
     clock_t t0 = clock();
     accion = monitor.get_entidad(0)->think(acc, estado[0], monitor.getLevel());
     clock_t t1 = clock();
@@ -364,7 +363,6 @@ void nucleo_motor_juego(MonitorJuego &monitor, int acc)
     monitor.get_entidad(0)->addTiempo(t1 - t0);
     monitor.get_entidad(0)->getLastAction(accion);
     actuacion(0, accion);
-    monitor.get_entidad(0)->setVision(monitor.getMapa()->vision(0));
   }
   else
   {
@@ -379,6 +377,10 @@ void nucleo_motor_juego(MonitorJuego &monitor, int acc)
 
     monitor.get_entidad(i)->addTiempo(t1 - t0);
     actuacion(i, accion);
+  }
+
+  for (unsigned int i = 0; i < monitor.numero_entidades(); i++)
+  {
     monitor.get_entidad(i)->setVision(monitor.getMapa()->vision(i));
   }
 
