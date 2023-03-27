@@ -748,7 +748,7 @@ void lanzar_motor_grafico_verOnline(int argc, char **argv, EnLinea &argumentos)
   MMmode = 0;
 
   // Posicion inicial del agente
-  monitor.inicializar(argumentos.fil_inicial, argumentos.col_inicial, argumentos.ori_inicial);
+  monitor.inicializar(argumentos.fil_inicial, argumentos.col_inicial, argumentos.ori_inicial, argumentos.semilla);
 
   monitor.get_entidad(0)->setOrientacion(static_cast<Orientacion>(argumentos.ori_inicial));
   // monitor.get_entidad(0)->setObjetivo(aux.first,aux.second);
