@@ -246,7 +246,8 @@ double MonitorJuego::CoincidenciaConElMapaContandoErrores()
       totalCasillas++;
     }
   }
-  return (aciertos * 100.0 / totalCasillas);
+
+  return (max(aciertos,0) * 100.0 / totalCasillas);
 }
 
 void MonitorJuego::PintaEstadoMonitor()
