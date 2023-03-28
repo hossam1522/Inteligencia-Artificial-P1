@@ -415,6 +415,7 @@ bool lanzar_motor_juego(int &colisiones, int acc)
       cout << "Colisiones: " << monitor.get_entidad(0)->getColisiones() << endl;
       cout << "Reinicios: " << monitor.get_entidad(0)->getMuertesI() << endl;
       cout << "Porcentaje de mapa descubierto: " << monitor.CoincidenciaConElMapa() << endl;
+      cout << "Porcentaje de mapa descubierto restando errores: " << monitor.CoincidenciaConElMapaContandoErrores() << endl;
       monitor.setMostrarResultados(false);
 
       out = true;
@@ -439,6 +440,7 @@ void lanzar_motor_juego2(MonitorJuego &monitor)
     cout << "Colisiones: " << monitor.get_entidad(0)->getColisiones() << endl;
     cout << "Reinicios: " << monitor.get_entidad(0)->getMuertesI() << endl;
     cout << "Porcentaje de mapa descubierto: " << monitor.CoincidenciaConElMapa() << endl;
+    cout << "Porcentaje de mapa descubierto restando errores: " << monitor.CoincidenciaConElMapaContandoErrores() << endl;
     monitor.setMostrarResultados(false);
   }
 }

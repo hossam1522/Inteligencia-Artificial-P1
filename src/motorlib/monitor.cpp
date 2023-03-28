@@ -227,6 +227,28 @@ double MonitorJuego::CoincidenciaConElMapa()
   return (aciertos * 100.0 / totalCasillas);
 }
 
+double MonitorJuego::CoincidenciaConElMapaContandoErrores()
+{
+  int aciertos = 0, totalCasillas = 0;
+
+  for (unsigned int i = 0; i < getMapa()->getNFils(); i++)
+  {
+    for (unsigned int j = 0; j < getMapa()->getNCols(); j++)
+    {
+      if (getMapa()->getCelda(i, j) == get_entidad(0)->getMapaResultado()[i][j])
+      {
+        aciertos++;
+      }
+      else if (get_entidad(0)->getMapaResultado()[i][j] != '?')
+      { // Puso un valor distinto de desconocido en mapaResultado y no acertó
+        aciertos--;
+      }
+      totalCasillas++;
+    }
+  }
+  return (aciertos * 100.0 / totalCasillas);
+}
+
 void MonitorJuego::PintaEstadoMonitor()
 {
   cout << "*********************************************\n";

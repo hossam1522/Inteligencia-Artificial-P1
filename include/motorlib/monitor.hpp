@@ -106,6 +106,7 @@ public:
   void set_currentMap(const string &map) { currentMap = map; }
 
   double CoincidenciaConElMapa();
+  double CoincidenciaConElMapaContandoErrores();
   void PintaEstadoMonitor();
   void init_casillas_especiales(unsigned int f, unsigned int c);
 
