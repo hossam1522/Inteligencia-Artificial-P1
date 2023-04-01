@@ -1,5 +1,6 @@
 #include "../Comportamientos_Jugador/jugador.hpp"
 #include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 void PonerTerrenoEnMatriz(const vector<unsigned char> &terreno, const state &st,
@@ -240,6 +241,445 @@ void ComportamientoJugador::rellenarPrecipicios(vector< vector<unsigned char> > 
 
 }
 
+int ComportamientoJugador::vecesVisitado (int num, Sensores sensores){
+	// Esta funcion devuelve el numero de veces que se ha visitado una casilla dentro del rango de visión
+
+	if (sensores.terreno[num]!='M' && sensores.terreno[num]!='P'){
+
+			if (sensores.terreno[num]=='B' && !tiene_zapatillas)
+				return INT_MAX;
+			else if (sensores.terreno[num]=='A' && !tiene_bikini)
+				return INT_MAX;
+
+	switch(sensores.sentido){
+		case norte:
+			switch(num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-1];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+1];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-2];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-1];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+1];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+2];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-3];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-2];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-1];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+1];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+2];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+3];
+					break;
+			}
+			break;
+
+		case noreste:
+			switch(num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+1];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil][current_state.col+1];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+1];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+2];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+2];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil][current_state.col+2];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+1];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+2];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+3];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+3];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+3];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil][current_state.col+3];
+					break;
+			}
+			break;
+
+		case este:
+			switch(num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+1];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil][current_state.col+1];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+1];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+2];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+2];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil][current_state.col+2];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+2];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+2];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col+3];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col+3];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col+3];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil][current_state.col+3];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+3];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+3];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+3];
+					break;
+			}
+			break;
+
+		case sureste:
+			switch (num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil][current_state.col+1];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+1];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil][current_state.col+2];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+2];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+2];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+1];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil][current_state.col+3];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+3];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+3];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+3];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+2];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+1];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col];
+					break;
+			}
+			break;
+
+		case sur:
+			switch (num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col+1];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-1];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+2];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col+1];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-1];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-2];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+3];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+2];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col+1];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-1];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-2];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-3];
+					break;
+			}
+			break;
+
+		case suroeste:
+			switch(num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-1];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil][current_state.col-1];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-1];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-2];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-2];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil][current_state.col-2];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-1];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-2];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-3];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-3];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-3];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil][current_state.col-3];
+					break;
+			}
+			break;
+
+		case oeste:
+			switch(num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-1];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil][current_state.col-1];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-1];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-2];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-2];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil][current_state.col-2];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-2];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-2];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil+3][current_state.col-3];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil+2][current_state.col-3];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil+1][current_state.col-3];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil][current_state.col-3];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-3];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-3];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-3];
+					break;
+			}
+			break;
+
+		case noroeste:
+			switch(num){
+				case 0:
+					return mapaVecesVisitado[current_state.fil][current_state.col];
+					break;
+				case 1:
+					return mapaVecesVisitado[current_state.fil][current_state.col-1];
+					break;
+				case 2:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-1];
+					break;
+				case 3:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col];
+					break;
+				case 4:
+					return mapaVecesVisitado[current_state.fil][current_state.col-2];
+					break;
+				case 5:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-2];
+					break;
+				case 6:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-2];
+					break;
+				case 7:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-1];
+					break;
+				case 8:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col];
+					break;
+				case 9:
+					return mapaVecesVisitado[current_state.fil][current_state.col-3];
+					break;
+				case 10:
+					return mapaVecesVisitado[current_state.fil-1][current_state.col-3];
+					break;
+				case 11:
+					return mapaVecesVisitado[current_state.fil-2][current_state.col-3];
+					break;
+				case 12:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-3];
+					break;
+				case 13:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-2];
+					break;
+				case 14:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col-1];
+					break;
+				case 15:
+					return mapaVecesVisitado[current_state.fil-3][current_state.col];
+					break;
+			}
+			break;
+	}
+	}
+	return INT_MAX;
+}
+
 bool ComportamientoJugador::loboCerca(Sensores sensores){
 	for (int i=1; i<sensores.superficie.size()-7; ++i)
 		if (sensores.superficie[i]=='l')
@@ -260,6 +700,12 @@ bool ComportamientoJugador::bikiniCercaDCHA(Sensores sensores){
 				sensores.terreno[3]=='K');
 }
 
+bool ComportamientoJugador::bikiniCercaFrente(Sensores sensores){
+	return ( (sensores.terreno[12]=='K' && sensores.terreno[6]!='M' && sensores.terreno[2]!='M')||
+				(sensores.terreno[6]=='K' && sensores.terreno[2]!='M') ||
+				sensores.terreno[2]=='K');
+}
+
 bool ComportamientoJugador::zapatillasCercaIZQ(Sensores sensores){
 	return ( (sensores.terreno[9]=='D' && sensores.terreno[4]!='M' && sensores.terreno[1]!='M')||
 					(sensores.terreno[4]=='D' && sensores.terreno[1]!='M') ||
@@ -270,6 +716,12 @@ bool ComportamientoJugador::zapatillasCercaDCHA(Sensores sensores){
 	return ( (sensores.terreno[15]=='D' && sensores.terreno[8]!='M' && sensores.terreno[3]!='M')||
 					(sensores.terreno[8]=='D' && sensores.terreno[3]!='M') ||
 					sensores.terreno[3]=='D');
+}
+
+bool ComportamientoJugador::zapatillasCercaFrente(Sensores sensores){
+	return ( (sensores.terreno[12]=='D' && sensores.terreno[6]!='M' && sensores.terreno[2]!='M')||
+					(sensores.terreno[6]=='D' && sensores.terreno[2]!='M') ||
+					sensores.terreno[2]=='D');
 }
 
 bool ComportamientoJugador::posicionamientoCercaIZQ(Sensores sensores){
@@ -285,7 +737,9 @@ bool ComportamientoJugador::posicionamientoCercaDCHA(Sensores sensores){
 }
 
 bool ComportamientoJugador::posicionamientoCercaFrente(Sensores sensores){
-	return (sensores.terreno[2]=='G' || sensores.terreno[6]=='G' || sensores.terreno[12]=='G');
+	return ( (sensores.terreno[12]=='G' && sensores.terreno[6]!='G' && sensores.terreno[2]!='G')||
+					(sensores.terreno[6]=='G' && sensores.terreno[2]!='G') ||
+					sensores.terreno[2]=='G');
 }
 
 bool ComportamientoJugador::hayPrecipicioDelante(Sensores sensores){
@@ -308,11 +762,13 @@ bool ComportamientoJugador::hayLimiteDerecha(Sensores sensores){
 }
 
 bool ComportamientoJugador::hayHuecoIzquierda(Sensores sensores){
-	return ((sensores.terreno[5]=='M' && sensores.terreno[11]=='M' && sensores.terreno[1]!='M'));
+	return ((sensores.terreno[5]=='M' && sensores.terreno[11]=='M' && sensores.terreno[1]!='M' &&
+			sensores.terreno[4]!='M' && sensores.terreno[9]!='M'));
 }
 
 bool ComportamientoJugador::hayHuecoDerecha(Sensores sensores){
-	return ((sensores.terreno[7]=='M' && sensores.terreno[13]=='M' && sensores.terreno[3]!='M'));
+	return ((sensores.terreno[7]=='M' && sensores.terreno[13]=='M' && sensores.terreno[3]!='M' &&
+				sensores.terreno[8]!='M' && sensores.terreno[15]!='M'));
 }
 
 bool ComportamientoJugador::puedoAvanzar(Sensores sensores){
@@ -322,100 +778,24 @@ bool ComportamientoJugador::puedoAvanzar(Sensores sensores){
 			&& sensores.superficie[2]== '_');
 }
 
-/* void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
+bool ComportamientoJugador::puedoAvanzarDCHA(Sensores sensores){
+	return ((sensores.terreno[3]== 'T' || sensores.terreno[3]== 'S' || sensores.terreno[3]== 'G' ||
+			sensores.terreno[3]== 'D' || sensores.terreno[3]== 'X' || sensores.terreno[3]== 'K'||
+			(sensores.terreno[3]== 'A' && tiene_bikini) || (sensores.terreno[3]== 'B' && tiene_zapatillas) )
+			&& sensores.superficie[3]== '_');
+}
 
-	// Decidir la nueva acción
-	if (loboCerca(sensores) && !girar_derecha)
-		accion = actTURN_BL;
-
-	else if (loboCerca(sensores) && girar_derecha)
-		accion = actTURN_BR;
-
-	else if (!bien_situado &&
-					puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
-					posicionamientoCercaIZQ(sensores))
-		accion = actTURN_SL;
-
-	else if (!bien_situado &&
-						puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
-						posicionamientoCercaDCHA(sensores))
-		accion = actTURN_SR;
-
-	else if (!tiene_zapatillas && !posicionamientoCercaIZQ(sensores) && !posicionamientoCercaDCHA(sensores) &&
-						puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
-						zapatillasCercaIZQ(sensores))
-		accion = actTURN_SL;
-
-	else if (!tiene_zapatillas && !posicionamientoCercaIZQ(sensores) && !posicionamientoCercaDCHA(sensores) &&
-						puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
-						zapatillasCercaDCHA(sensores))
-		accion = actTURN_SR;
-
-	else if (!tiene_bikini && !posicionamientoCercaIZQ(sensores) && !posicionamientoCercaDCHA(sensores) &&
-						puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
-						bikiniCercaIZQ(sensores))
-		accion = actTURN_SL;
-
-	else if (!tiene_bikini && !posicionamientoCercaIZQ(sensores) && !posicionamientoCercaDCHA(sensores) &&
-						puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
-						bikiniCercaDCHA(sensores))
-		accion = actTURN_SR;
-
-	else if (hayPrecipicioDelante(sensores) && !girar_derecha)
-		accion = actTURN_BL;
-
-	else if (hayPrecipicioDelante(sensores))
-		accion = actTURN_SL;
-
-	else if (hayHuecoIzquierda(sensores))
-		accion = actTURN_SL;
-
-	else if (hayHuecoDerecha(sensores))
-		accion = actTURN_SR;
-
-	else if (puedoAvanzar(sensores))
-		accion = actFORWARD;
-
-	else if (hayLimiteIzquierda(sensores))
-		accion = actTURN_SR;
-
-	else if (hayLimiteDerecha(sensores))
-		accion = actTURN_SL;
-
-	 else if (!girar_derecha)
-		accion = actTURN_SL;
-
-	else
-		accion = actTURN_SR;
-
-
-
-	if (sensores.bateria<2000 &&
-			(sensores.terreno[9]=='X' ||  sensores.terreno[4]=='X' || sensores.terreno[1]=='X'))
-		accion = actTURN_SL;
-
-	else if (sensores.bateria<2000 &&
-			(sensores.terreno[15]=='X' ||  sensores.terreno[8]=='X' || sensores.terreno[3]=='X'))
-		accion = actTURN_SR;
-
-	if((sensores.terreno[0] == 'B' and !tiene_zapatillas) || (sensores.terreno[0]=='A' and !tiene_bikini)
-			&& sensores.superficie[2] == '_' )
-		accion=actFORWARD;
-
-	if ((sensores.terreno[2]=='G' || sensores.terreno[6]=='G' || sensores.terreno[12]=='G')
-			&& !bien_situado)
-		accion=actFORWARD;
-
-	if (recargando && sensores.terreno[0] == 'X' && sensores.bateria < 5000)
-		accion = actIDLE;
-	else
-		recargando = false;
-
-	girar_derecha=(rand()%2==0);
-}*/
+bool ComportamientoJugador::puedoAvanzarIZQ(Sensores sensores){
+	return ((sensores.terreno[1]== 'T' || sensores.terreno[1]== 'S' || sensores.terreno[1]== 'G' ||
+			sensores.terreno[1]== 'D' || sensores.terreno[1]== 'X' || sensores.terreno[1]== 'K'||
+			(sensores.terreno[1]== 'A' && tiene_bikini) || (sensores.terreno[1]== 'B' && tiene_zapatillas) )
+			&& sensores.superficie[1]== '_');
+}
 
 void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
+
 	if (!bien_situado){
+
 		if (loboCerca(sensores) && !girar_derecha)
 			accion = actTURN_BL;
 
@@ -423,13 +803,159 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 			accion = actTURN_BR;
 
 		else if (posicionamientoCercaDCHA(sensores) && puedoCruzarDiagonalDCHASinZapatillas(sensores)
-						 && puedoCruzarDiagonalDCHASinZapatillas(sensores))
+						 && puedoCruzarDiagonalDCHASinBikini(sensores))
 			accion = actTURN_SR;
 
 		else if (posicionamientoCercaIZQ(sensores) && puedoCruzarDiagonalIZQSinZapatillas(sensores)
-						 && puedoCruzarDiagonalIZQSinZapatillas(sensores)){
+						 && puedoCruzarDiagonalIZQSinBikini(sensores))
 			accion = actTURN_SL;
+
+		else if (posicionamientoCercaFrente(sensores))
+			accion = actFORWARD;
+
+		else if ((hayPrecipicioDelante(sensores) ||
+						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) && !girar_derecha)
+			accion = actTURN_BL;
+
+		else if (hayPrecipicioDelante(sensores) ||
+						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
+			accion = actTURN_SL;
+
+		else if (hayHuecoIzquierda(sensores))
+			accion = actTURN_SL;
+
+		else if (hayHuecoDerecha(sensores))
+			accion = actTURN_SR;
+
+		else if (puedoAvanzar(sensores))
+			accion = actFORWARD;
+
+		/* else if (hayLimiteIzquierda(sensores))
+			accion = actTURN_SR;
+
+		else if (hayLimiteDerecha(sensores))
+			accion = actTURN_SL; */
+
+		else if (!girar_derecha)
+		accion = actTURN_SL;
+
+		else
+		accion = actTURN_SR;
+
+
+		if((sensores.terreno[0] == 'B' and !tiene_zapatillas) || (sensores.terreno[0]=='A' and !tiene_bikini)
+			&& sensores.superficie[2] == '_' )
+		accion=actFORWARD;
+	}
+	else{
+
+		if (loboCerca(sensores) && !girar_derecha)
+			accion = actTURN_BL;
+
+		else if (loboCerca(sensores) && girar_derecha)
+			accion = actTURN_BR;
+
+		if (sensores.bateria<2000 &&
+				(sensores.terreno[9]=='X' ||  sensores.terreno[4]=='X' || sensores.terreno[1]=='X'))
+			accion = actTURN_SL;
+
+		else if (sensores.bateria<2000 &&
+				(sensores.terreno[15]=='X' ||  sensores.terreno[8]=='X' || sensores.terreno[3]=='X'))
+			accion = actTURN_SR;
+
+		else if (sensores.bateria<2000 &&
+				(sensores.terreno[12]=='X' ||  sensores.terreno[6]=='X' || sensores.terreno[2]=='X'))
+			accion = actFORWARD;
+
+		else if ((!tiene_zapatillas && zapatillasCercaFrente(sensores) && puedoCruzarFrenteSinZapatillas(sensores) &&
+							puedoCruzarFrenteSinBikini(sensores) ) ||
+							(!tiene_bikini && bikiniCercaFrente(sensores) && puedoCruzarFrenteSinBikini(sensores) &&
+							puedoCruzarFrenteSinZapatillas(sensores) ))
+			accion = actFORWARD;
+
+		else if (!tiene_zapatillas &&
+							puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
+							zapatillasCercaIZQ(sensores))
+			accion = actTURN_SL;
+
+		else if (!tiene_zapatillas &&
+							puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
+							zapatillasCercaDCHA(sensores))
+			accion = actTURN_SR;
+
+		else if (!tiene_bikini &&
+							puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
+							bikiniCercaIZQ(sensores))
+			accion = actTURN_SL;
+
+		else if (!tiene_bikini &&
+							puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
+							bikiniCercaDCHA(sensores))
+			accion = actTURN_SR;
+
+		else if (vecesVisitado(2, sensores) <= vecesVisitado(1,sensores) &&
+							vecesVisitado(2, sensores) <= vecesVisitado(3,sensores) && puedoAvanzar(sensores)) {
+
+			if (puedoAvanzar(sensores) && ((sensores.terreno[3]=='M' && sensores.terreno[5]=='M') ||
+					(sensores.terreno[3]=='M' && sensores.terreno[1]=='M')))
+				accion = actFORWARD;
+
+			else if (hayHuecoIzquierda(sensores))
+				accion = actTURN_SL;
+
+			else if (hayHuecoDerecha(sensores))
+				accion = actTURN_SR;
+
+			else if (vecesVisitado(1, sensores) <= vecesVisitado(2, sensores) &&
+								vecesVisitado(4, sensores) < vecesVisitado(6,sensores) && puedoAvanzarIZQ(sensores))
+				accion = actTURN_SL;
+
+			else if (vecesVisitado(3, sensores) <= vecesVisitado(2, sensores) &&
+								vecesVisitado(8, sensores) < vecesVisitado(6,sensores) && puedoAvanzarDCHA(sensores))
+				accion = actTURN_SR;
+
+			else
+				accion = actFORWARD;
+
 		}
+		else if ((hayPrecipicioDelante(sensores) ||
+							(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) && !girar_derecha)
+			accion = actTURN_BL;
+
+		else if (hayPrecipicioDelante(sensores) ||
+							(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
+			accion = actTURN_SL;
+
+		else if (hayHuecoIzquierda(sensores))
+			accion = actTURN_SL;
+
+		else if (hayHuecoDerecha(sensores))
+			accion = actTURN_SR;
+
+		else if (puedoAvanzar(sensores))
+			accion = actFORWARD;
+
+		/*else if (hayLimiteIzquierda(sensores))
+			accion = actTURN_SR;
+
+		else if (hayLimiteDerecha(sensores))
+			accion = actTURN_SL; */
+
+		else if (!girar_derecha)
+		accion = actTURN_SL;
+
+		else
+		accion = actTURN_SR;
+
+
+		if (recargando && sensores.terreno[0] == 'X' && sensores.bateria < 4000)
+			accion = actIDLE;
+		else
+			recargando = false;
+
+		if((sensores.terreno[0] == 'B' and !tiene_zapatillas) || (sensores.terreno[0]=='A' and !tiene_bikini)
+			&& sensores.superficie[2] == '_' )
+		accion=actFORWARD;
 	}
 
 	girar_derecha=(rand()%2==0);
@@ -486,7 +1012,8 @@ bool ComportamientoJugador::puedoCruzarDiagonalIZQSinZapatillas(Sensores sensore
 	if (tiene_zapatillas)
 		return true;
 	else{
-		return (sensores.terreno[4]!='B' && sensores.terreno[1]!='B');
+		return (sensores.terreno[4]!='B' && sensores.terreno[1]!='B' &&
+						sensores.terreno[4]!='M' && sensores.terreno[1]!='M');
 	}
 }
 
@@ -494,7 +1021,17 @@ bool ComportamientoJugador::puedoCruzarDiagonalDCHASinZapatillas(Sensores sensor
 	if (tiene_zapatillas)
 		return true;
 	else{
-		return (sensores.terreno[8]!='B' && sensores.terreno[3]!='B');
+		return (sensores.terreno[8]!='B' && sensores.terreno[3]!='B' &&
+						sensores.terreno[8]!='M' && sensores.terreno[3]!='M');
+	}
+}
+
+bool ComportamientoJugador::puedoCruzarFrenteSinZapatillas(Sensores sensores){
+	if (tiene_zapatillas)
+		return true;
+	else{
+		return (sensores.terreno[6]!='B' && sensores.terreno[2]!='B' &&
+						sensores.terreno[6]!='M' && sensores.terreno[2]!='M');
 	}
 }
 
@@ -502,7 +1039,8 @@ bool ComportamientoJugador::puedoCruzarDiagonalIZQSinBikini(Sensores sensores){
 	if(tiene_bikini)
 		return true;
 	else{
-		return (sensores.terreno[4]!='A' && sensores.terreno[1]!='A');
+		return (sensores.terreno[4]!='A' && sensores.terreno[1]!='A' &&
+						sensores.terreno[4]!='M' && sensores.terreno[1]!='M');
 	}
 }
 
@@ -510,6 +1048,16 @@ bool ComportamientoJugador::puedoCruzarDiagonalDCHASinBikini(Sensores sensores){
 	if(tiene_bikini)
 		return true;
 	else{
-		return (sensores.terreno[8]!='A' && sensores.terreno[3]!='A');
+		return (sensores.terreno[8]!='A' && sensores.terreno[3]!='A' &&
+						sensores.terreno[8]!='M' && sensores.terreno[3]!='M');
+	}
+}
+
+bool ComportamientoJugador::puedoCruzarFrenteSinBikini(Sensores sensores){
+	if(tiene_bikini)
+		return true;
+	else{
+		return (sensores.terreno[6]!='A' && sensores.terreno[2]!='A' &&
+						sensores.terreno[6]!='M' && sensores.terreno[2]!='M');
 	}
 }
