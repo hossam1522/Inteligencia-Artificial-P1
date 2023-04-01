@@ -1,6 +1,11 @@
 {
     "files.associations": {
+<<<<<<< HEAD
+        "iostream": "cpp",
+        "*.tcc": "cpp",
+=======
         "iosfwd": "cpp",
+>>>>>>> 40711050525fad861a0b74e01d894be6c0d89f84
         "ostream": "cpp"
     }
 }
