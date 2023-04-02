@@ -775,8 +775,8 @@ bool ComportamientoJugador::hayHuecoDerecha(Sensores sensores){
 					sensores.terreno[3]!='M' && sensores.terreno[8]!='M' && sensores.terreno[15]!='M' &&
 					sensores.terreno[3]!='P' && sensores.terreno[8]!='P' && sensores.terreno[15]!='P') ||
 					(sensores.terreno[7]=='P' && sensores.terreno[13]=='P' &&
-					sensores.terreno[3]!='P' && sensores.terreno[8]!='P' && sensores.terreno[15]!='P') &&
-					sensores.terreno[3]!='M' && sensores.terreno[8]!='M' && sensores.terreno[15]!='M');
+					sensores.terreno[3]!='P' && sensores.terreno[8]!='P' &&  sensores.terreno[15]!='P' &&
+					sensores.terreno[3]!='M' && sensores.terreno[8]!='M' && sensores.terreno[15]!='M'));
 }
 
 bool ComportamientoJugador::puedoAvanzar(int num, Sensores sensores){
@@ -800,16 +800,19 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
 			accion = actTURN_BR; */
 
-		else if (posicionamientoCercaFrente(sensores) /* && puedoCruzarFrenteSinZapatillas(sensores)
-						 && puedoCruzarFrenteSinBikini(sensores) */)
+		else if (posicionamientoCercaFrente(sensores) /*  && puedoCruzarFrenteSinZapatillas(sensores) */
+						 //&& puedoCruzarFrenteSinBikini(sensores) /* && puedoCruzarFrenteSinZapatillas(sensores) */)
+						/*&& puedoAvanzar(2, sensores) && puedoAvanzar(6, sensores)  && puedoAvanzar(12, sensores) */)
 			accion = actFORWARD;
 
-		else if (posicionamientoCercaDCHA(sensores) && puedoCruzarDiagonalDCHASinZapatillas(sensores)
-						 && puedoCruzarDiagonalDCHASinBikini(sensores))
+		else if (posicionamientoCercaDCHA(sensores) /* && puedoCruzarDiagonalDCHASinZapatillas(sensores)
+						 && puedoCruzarDiagonalDCHASinBikini(sensores)) */
+						  && puedoAvanzar(3, sensores) && puedoAvanzar(8, sensores)  && puedoAvanzar(15, sensores) )
 			accion = actTURN_SR;
 
-		else if (posicionamientoCercaIZQ(sensores) && puedoCruzarDiagonalIZQSinZapatillas(sensores)
-						 && puedoCruzarDiagonalIZQSinBikini(sensores))
+		else if (posicionamientoCercaIZQ(sensores) /* && puedoCruzarDiagonalIZQSinZapatillas(sensores)
+						 && puedoCruzarDiagonalIZQSinBikini(sensores) */
+						  && puedoAvanzar(1, sensores) && puedoAvanzar(4, sensores)  && puedoAvanzar(9, sensores) )
 			accion = actTURN_SL;
 
 		else if ((hayPrecipicioDelante(sensores) ||
@@ -822,11 +825,14 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
 				accion = actFORWARD;
 
-		else if (hayHuecoIzquierda(sensores))
+		else if (hayHuecoIzquierda(sensores) && puedoAvanzar(1, sensores))
 			accion = actTURN_SL;
 
-		else if (hayHuecoDerecha(sensores))
+		else if (hayHuecoDerecha(sensores) && puedoAvanzar(3, sensores))
 			accion = actTURN_SR;
+
+		/* else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
+				accion = actFORWARD; */
 
 		else if (hayLimiteIzquierda(sensores))
 			accion = actTURN_SR;
@@ -858,7 +864,7 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		else if (loboCerca(sensores))
 			accion = actTURN_BR;
 
-		if (sensores.bateria<2000 &&
+		else if (sensores.bateria<2000 &&
 				(sensores.terreno[9]=='X' ||  sensores.terreno[4]=='X' || sensores.terreno[1]=='X'))
 			accion = actTURN_SL;
 
@@ -870,59 +876,62 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 				(sensores.terreno[12]=='X' ||  sensores.terreno[6]=='X' || sensores.terreno[2]=='X'))
 			accion = actFORWARD;
 
-		else if ((!tiene_zapatillas && zapatillasCercaFrente(sensores) && puedoCruzarFrenteSinZapatillas(sensores) &&
-							puedoCruzarFrenteSinBikini(sensores) ) ||
-							(!tiene_bikini && bikiniCercaFrente(sensores) && puedoCruzarFrenteSinBikini(sensores) &&
-							puedoCruzarFrenteSinZapatillas(sensores) ))
+		else if ((!tiene_zapatillas && zapatillasCercaFrente(sensores) /* && puedoCruzarFrenteSinZapatillas(sensores) &&
+							puedoCruzarFrenteSinBikini(sensores) */
+							 && puedoAvanzar(2, sensores) && puedoAvanzar(6, sensores)  && puedoAvanzar(12, sensores)) ||
+							(!tiene_bikini && bikiniCercaFrente(sensores) /* && puedoCruzarFrenteSinBikini(sensores) &&
+							puedoCruzarFrenteSinZapatillas(sensores) */
+							&& puedoAvanzar(2, sensores) && puedoAvanzar(6, sensores)  && puedoAvanzar(12, sensores) ))
 			accion = actFORWARD;
 
 		else if (!tiene_zapatillas &&
-							puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
+							/* puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) && */
+							puedoAvanzar(1, sensores) && puedoAvanzar(4, sensores)  && puedoAvanzar(9, sensores) &&
 							zapatillasCercaIZQ(sensores))
 			accion = actTURN_SL;
 
 		else if (!tiene_zapatillas &&
-							puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
+							/* puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) */
+							puedoAvanzar(3, sensores) && puedoAvanzar(8, sensores)  && puedoAvanzar(15, sensores) &&
 							zapatillasCercaDCHA(sensores))
 			accion = actTURN_SR;
 
 		else if (!tiene_bikini &&
-							puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) &&
+							/* puedoCruzarDiagonalIZQSinZapatillas(sensores) && puedoCruzarDiagonalIZQSinBikini(sensores) && */
+							puedoAvanzar(1, sensores) && puedoAvanzar(4, sensores)  && puedoAvanzar(9, sensores) &&
 							bikiniCercaIZQ(sensores))
 			accion = actTURN_SL;
 
 		else if (!tiene_bikini &&
-							puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) &&
+							/* puedoCruzarDiagonalDCHASinZapatillas(sensores) && puedoCruzarDiagonalDCHASinBikini(sensores) && */
+							puedoAvanzar(3, sensores) && puedoAvanzar(8, sensores)  && puedoAvanzar(15, sensores) &&
 							bikiniCercaDCHA(sensores))
 			accion = actTURN_SR;
 
-		else if (vecesVisitado(2, sensores) <= vecesVisitado(1,sensores) &&
-							vecesVisitado(2, sensores) <= vecesVisitado(3,sensores) && puedoAvanzar(2, sensores)) {
+		else if (vecesVisitado(2, sensores) < vecesVisitado(1,sensores) &&
+							vecesVisitado(2, sensores) < vecesVisitado(3,sensores) && puedoAvanzar(2, sensores)) {
 
 			if ((sensores.terreno[3]=='M' && sensores.terreno[5]=='M') ||
 					(sensores.terreno[3]=='M' && sensores.terreno[1]=='M'))
 				accion = actFORWARD;
 
-			else if (hayHuecoIzquierda(sensores))
-				accion = actTURN_SL;
-
-			else if (hayHuecoDerecha(sensores))
-				accion = actTURN_SR;
-
 			else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
 				accion = actFORWARD;
 
-			else if (vecesVisitado(1, sensores) <= vecesVisitado(2, sensores) &&
-								vecesVisitado(4, sensores) < vecesVisitado(6,sensores) &&
-								vecesVisitado(9, sensores) < vecesVisitado(12,sensores) && puedoAvanzar(1,sensores) &&
-								puedoAvanzar(4, sensores) && puedoAvanzar(9, sensores))
+			else if (hayHuecoIzquierda(sensores) && puedoAvanzar(1, sensores))
 				accion = actTURN_SL;
 
-			else if (vecesVisitado(3, sensores) <= vecesVisitado(2, sensores) &&
-								vecesVisitado(8, sensores) < vecesVisitado(6,sensores) &&
-								vecesVisitado(15, sensores) < vecesVisitado(12,sensores) && puedoAvanzar(3, sensores) &&
-								puedoAvanzar(8, sensores) && puedoAvanzar(15, sensores))
+			else if (hayHuecoDerecha(sensores) && puedoAvanzar(3, sensores))
 				accion = actTURN_SR;
+
+			/* else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
+				accion = actFORWARD; */
+
+			else if (hayLimiteIzquierda(sensores))
+				accion = actTURN_SR;
+
+			else if (hayLimiteDerecha(sensores))
+				accion = actTURN_SL;
 
 			else
 				accion = actFORWARD;
@@ -936,14 +945,17 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 			else
 				accion = actTURN_BR;
 
-		else if (hayHuecoIzquierda(sensores))
-			accion = actTURN_SL;
-
-		else if (hayHuecoDerecha(sensores))
-			accion = actTURN_SR;
-
 		else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
 				accion = actFORWARD;
+
+		else if (hayHuecoIzquierda(sensores) && puedoAvanzar(1, sensores))
+			accion = actTURN_SL;
+
+		else if (hayHuecoDerecha(sensores) && puedoAvanzar(3, sensores))
+			accion = actTURN_SR;
+
+		/* else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
+				accion = actFORWARD; */
 
 		else if (vecesVisitado(1, sensores) <= vecesVisitado(2, sensores) &&
 							vecesVisitado(4, sensores) < vecesVisitado(6,sensores) &&
@@ -960,6 +972,12 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 
 		else if (puedoAvanzar(2,sensores))
 			accion = actFORWARD;
+
+		/* else if (puedoAvanzar(1, sensores))
+			accion = actTURN_SL;
+
+		else if (puedoAvanzar(3, sensores))
+			accion = actTURN_SR; */
 
 		/*else if (hayLimiteIzquierda(sensores))
 			accion = actTURN_SR;
