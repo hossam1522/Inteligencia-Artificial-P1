@@ -762,34 +762,28 @@ bool ComportamientoJugador::hayLimiteDerecha(Sensores sensores){
 }
 
 bool ComportamientoJugador::hayHuecoIzquierda(Sensores sensores){
-	return ((sensores.terreno[5]=='M' && sensores.terreno[11]=='M' && sensores.terreno[1]!='M' &&
-			sensores.terreno[4]!='M' && sensores.terreno[9]!='M'));
+	return ((sensores.terreno[5]=='M' && sensores.terreno[11]=='M' &&
+					sensores.terreno[1]!='M' && sensores.terreno[4]!='M' && sensores.terreno[9]!='M' &&
+					sensores.terreno[1]!='P' && sensores.terreno[4]!='P' && sensores.terreno[9]!='P') ||
+					(sensores.terreno[5]=='P' && sensores.terreno[11]=='P' &&
+					sensores.terreno[1]!='P' && sensores.terreno[4]!='P' && sensores.terreno[9]!='P' &&
+					sensores.terreno[1]!='M' && sensores.terreno[4]!='M' && sensores.terreno[9]!='M'));
 }
 
 bool ComportamientoJugador::hayHuecoDerecha(Sensores sensores){
-	return ((sensores.terreno[7]=='M' && sensores.terreno[13]=='M' && sensores.terreno[3]!='M' &&
-				sensores.terreno[8]!='M' && sensores.terreno[15]!='M'));
+	return ((sensores.terreno[7]=='M' && sensores.terreno[13]=='M' &&
+					sensores.terreno[3]!='M' && sensores.terreno[8]!='M' && sensores.terreno[15]!='M' &&
+					sensores.terreno[3]!='P' && sensores.terreno[8]!='P' && sensores.terreno[15]!='P') ||
+					(sensores.terreno[7]=='P' && sensores.terreno[13]=='P' &&
+					sensores.terreno[3]!='P' && sensores.terreno[8]!='P' && sensores.terreno[15]!='P') &&
+					sensores.terreno[3]!='M' && sensores.terreno[8]!='M' && sensores.terreno[15]!='M');
 }
 
-bool ComportamientoJugador::puedoAvanzar(Sensores sensores){
-	return ((sensores.terreno[2]== 'T' || sensores.terreno[2]== 'S' || sensores.terreno[2]== 'G' ||
-			sensores.terreno[2]== 'D' || sensores.terreno[2]== 'X' || sensores.terreno[2]== 'K'||
-			(sensores.terreno[2]== 'A' && tiene_bikini) || (sensores.terreno[2]== 'B' && tiene_zapatillas) )
-			&& sensores.superficie[2]== '_');
-}
-
-bool ComportamientoJugador::puedoAvanzarDCHA(Sensores sensores){
-	return ((sensores.terreno[3]== 'T' || sensores.terreno[3]== 'S' || sensores.terreno[3]== 'G' ||
-			sensores.terreno[3]== 'D' || sensores.terreno[3]== 'X' || sensores.terreno[3]== 'K'||
-			(sensores.terreno[3]== 'A' && tiene_bikini) || (sensores.terreno[3]== 'B' && tiene_zapatillas) )
-			&& sensores.superficie[3]== '_');
-}
-
-bool ComportamientoJugador::puedoAvanzarIZQ(Sensores sensores){
-	return ((sensores.terreno[1]== 'T' || sensores.terreno[1]== 'S' || sensores.terreno[1]== 'G' ||
-			sensores.terreno[1]== 'D' || sensores.terreno[1]== 'X' || sensores.terreno[1]== 'K'||
-			(sensores.terreno[1]== 'A' && tiene_bikini) || (sensores.terreno[1]== 'B' && tiene_zapatillas) )
-			&& sensores.superficie[1]== '_');
+bool ComportamientoJugador::puedoAvanzar(int num, Sensores sensores){
+	return ((sensores.terreno[num]== 'T' || sensores.terreno[num]== 'S' || sensores.terreno[num]== 'G' ||
+			sensores.terreno[num]== 'D' || sensores.terreno[num]== 'X' || sensores.terreno[num]== 'K'||
+			(sensores.terreno[num]== 'A' && tiene_bikini) || (sensores.terreno[num]== 'B' && tiene_zapatillas) )
+			&& sensores.superficie[num]== '_');
 }
 
 void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
@@ -799,8 +793,12 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		if (loboCerca(sensores) && !girar_derecha)
 			accion = actTURN_BL;
 
-		else if (loboCerca(sensores) && girar_derecha)
+		else if (loboCerca(sensores))
 			accion = actTURN_BR;
+
+		/* else if (hayPrecipicioDelante(sensores) ||
+						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
+			accion = actTURN_BR; */
 
 		else if (posicionamientoCercaDCHA(sensores) && puedoCruzarDiagonalDCHASinZapatillas(sensores)
 						 && puedoCruzarDiagonalDCHASinBikini(sensores))
@@ -814,12 +812,14 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 			accion = actFORWARD;
 
 		else if ((hayPrecipicioDelante(sensores) ||
-						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) && !girar_derecha)
-			accion = actTURN_BL;
+						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) /* && !girar_derecha */)
+			if (!girar_derecha)
+				accion = actTURN_BL;
+			else
+				accion = actTURN_BR;
 
-		else if (hayPrecipicioDelante(sensores) ||
-						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
-			accion = actTURN_SL;
+		else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
+				accion = actFORWARD;
 
 		else if (hayHuecoIzquierda(sensores))
 			accion = actTURN_SL;
@@ -827,14 +827,16 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		else if (hayHuecoDerecha(sensores))
 			accion = actTURN_SR;
 
-		else if (puedoAvanzar(sensores))
-			accion = actFORWARD;
-
-		/* else if (hayLimiteIzquierda(sensores))
+		else if (hayLimiteIzquierda(sensores))
 			accion = actTURN_SR;
 
 		else if (hayLimiteDerecha(sensores))
-			accion = actTURN_SL; */
+			accion = actTURN_SL;
+
+		else if (puedoAvanzar(2, sensores))
+			accion = actFORWARD;
+
+
 
 		else if (!girar_derecha)
 		accion = actTURN_SL;
@@ -852,7 +854,7 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		if (loboCerca(sensores) && !girar_derecha)
 			accion = actTURN_BL;
 
-		else if (loboCerca(sensores) && girar_derecha)
+		else if (loboCerca(sensores))
 			accion = actTURN_BR;
 
 		if (sensores.bateria<2000 &&
@@ -894,10 +896,10 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 			accion = actTURN_SR;
 
 		else if (vecesVisitado(2, sensores) <= vecesVisitado(1,sensores) &&
-							vecesVisitado(2, sensores) <= vecesVisitado(3,sensores) && puedoAvanzar(sensores)) {
+							vecesVisitado(2, sensores) <= vecesVisitado(3,sensores) && puedoAvanzar(2, sensores)) {
 
-			if (puedoAvanzar(sensores) && ((sensores.terreno[3]=='M' && sensores.terreno[5]=='M') ||
-					(sensores.terreno[3]=='M' && sensores.terreno[1]=='M')))
+			if ((sensores.terreno[3]=='M' && sensores.terreno[5]=='M') ||
+					(sensores.terreno[3]=='M' && sensores.terreno[1]=='M'))
 				accion = actFORWARD;
 
 			else if (hayHuecoIzquierda(sensores))
@@ -906,25 +908,32 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 			else if (hayHuecoDerecha(sensores))
 				accion = actTURN_SR;
 
+			else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
+				accion = actFORWARD;
+
 			else if (vecesVisitado(1, sensores) <= vecesVisitado(2, sensores) &&
-								vecesVisitado(4, sensores) < vecesVisitado(6,sensores) && puedoAvanzarIZQ(sensores))
+								vecesVisitado(4, sensores) < vecesVisitado(6,sensores) &&
+								vecesVisitado(9, sensores) < vecesVisitado(12,sensores) && puedoAvanzar(1,sensores) &&
+								puedoAvanzar(4, sensores) && puedoAvanzar(9, sensores))
 				accion = actTURN_SL;
 
 			else if (vecesVisitado(3, sensores) <= vecesVisitado(2, sensores) &&
-								vecesVisitado(8, sensores) < vecesVisitado(6,sensores) && puedoAvanzarDCHA(sensores))
+								vecesVisitado(8, sensores) < vecesVisitado(6,sensores) &&
+								vecesVisitado(15, sensores) < vecesVisitado(12,sensores) && puedoAvanzar(3, sensores) &&
+								puedoAvanzar(8, sensores) && puedoAvanzar(15, sensores))
 				accion = actTURN_SR;
 
 			else
 				accion = actFORWARD;
 
 		}
-		else if ((hayPrecipicioDelante(sensores) ||
-							(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) && !girar_derecha)
-			accion = actTURN_BL;
 
-		else if (hayPrecipicioDelante(sensores) ||
-							(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
-			accion = actTURN_SL;
+		else if ((hayPrecipicioDelante(sensores) ||
+						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) /* && !girar_derecha */)
+			if (!girar_derecha)
+				accion = actTURN_BL;
+			else
+				accion = actTURN_BR;
 
 		else if (hayHuecoIzquierda(sensores))
 			accion = actTURN_SL;
@@ -932,7 +941,23 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		else if (hayHuecoDerecha(sensores))
 			accion = actTURN_SR;
 
-		else if (puedoAvanzar(sensores))
+		else if ((last_action==actTURN_SR || last_action==actTURN_SL) && puedoAvanzar(2, sensores))
+				accion = actFORWARD;
+
+		else if (vecesVisitado(1, sensores) <= vecesVisitado(2, sensores) &&
+							vecesVisitado(4, sensores) < vecesVisitado(6,sensores) &&
+							vecesVisitado(9, sensores) < vecesVisitado(12,sensores) && puedoAvanzar(1,sensores) &&
+							puedoAvanzar(4, sensores) && puedoAvanzar(9, sensores))
+			accion = actTURN_SL;
+
+		else if (vecesVisitado(3, sensores) <= vecesVisitado(2, sensores) &&
+							vecesVisitado(8, sensores) < vecesVisitado(6,sensores) &&
+							vecesVisitado(15, sensores) < vecesVisitado(12,sensores) && puedoAvanzar(3, sensores) &&
+							puedoAvanzar(8, sensores) && puedoAvanzar(15, sensores))
+			accion = actTURN_SR;
+
+
+		else if (puedoAvanzar(2,sensores))
 			accion = actFORWARD;
 
 		/*else if (hayLimiteIzquierda(sensores))
@@ -959,10 +984,6 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 	}
 
 	girar_derecha=(rand()%2==0);
-}
-
-void ComportamientoJugador::irHaciaDesconocido(Action &accion, Sensores sensores){
-	accion = actTURN_BL;
 }
 
 void ComportamientoJugador::actualizarVariablesEstado(){

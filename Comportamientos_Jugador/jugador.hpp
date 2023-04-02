@@ -2,6 +2,7 @@
 #define COMPORTAMIENTOJUGADOR_H
 
 #include "comportamientos/comportamiento.hpp"
+#include <iostream>
 using namespace std;
 
 struct state{
@@ -19,7 +20,8 @@ class ComportamientoJugador : public Comportamiento{
       current_state.fil = current_state.col = 99;
       current_state.brujula = norte;
       last_action = actIDLE;
-      girar_derecha = bien_situado = false;
+      girar_derecha = (rand()%2==0);
+      bien_situado = false;
       tiene_bikini = tiene_zapatillas = recargando = false;
       precipicios_rellenos = false;
       orientacion_correcta = false;
@@ -52,9 +54,7 @@ class ComportamientoJugador : public Comportamiento{
     bool hayPrecipicioDelante(Sensores sensores);
     bool hayLimiteIzquierda(Sensores sensores);
     bool hayLimiteDerecha(Sensores sensores);
-    bool puedoAvanzar(Sensores sensores);
-    bool puedoAvanzarDCHA(Sensores sensores);
-    bool puedoAvanzarIZQ(Sensores sensores);
+    bool puedoAvanzar(int num, Sensores sensores);
     bool hayHuecoIzquierda (Sensores sensores);
     bool hayHuecoDerecha (Sensores sensores);
     bool puedoCruzarDiagonalIZQSinZapatillas(Sensores sensores);
