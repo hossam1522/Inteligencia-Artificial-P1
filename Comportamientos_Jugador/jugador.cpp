@@ -681,7 +681,7 @@ int ComportamientoJugador::vecesVisitado (int num, Sensores sensores){
 }
 
 bool ComportamientoJugador::loboCerca(Sensores sensores){
-	for (int i=1; i<sensores.superficie.size()-7; ++i)
+	for (int i=1; i<sensores.superficie.size(); ++i)
 		if (sensores.superficie[i]=='l')
 			return true;
 
@@ -800,6 +800,10 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M'))
 			accion = actTURN_BR; */
 
+		else if (posicionamientoCercaFrente(sensores) /* && puedoCruzarFrenteSinZapatillas(sensores)
+						 && puedoCruzarFrenteSinBikini(sensores) */)
+			accion = actFORWARD;
+
 		else if (posicionamientoCercaDCHA(sensores) && puedoCruzarDiagonalDCHASinZapatillas(sensores)
 						 && puedoCruzarDiagonalDCHASinBikini(sensores))
 			accion = actTURN_SR;
@@ -807,9 +811,6 @@ void ComportamientoJugador::elegirMovimiento(Action &accion, Sensores sensores){
 		else if (posicionamientoCercaIZQ(sensores) && puedoCruzarDiagonalIZQSinZapatillas(sensores)
 						 && puedoCruzarDiagonalIZQSinBikini(sensores))
 			accion = actTURN_SL;
-
-		else if (posicionamientoCercaFrente(sensores))
-			accion = actFORWARD;
 
 		else if ((hayPrecipicioDelante(sensores) ||
 						(sensores.terreno[1]=='M' && sensores.terreno[2]=='M' && sensores.terreno[3]=='M')) /* && !girar_derecha */)
