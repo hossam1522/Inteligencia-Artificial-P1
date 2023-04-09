@@ -39,7 +39,6 @@ class ComportamientoJugador : public Comportamiento{
     void rellenarPrecipicios(vector< vector<unsigned char> > &matriz);
     int vecesVisitado (int num, Sensores sensores);
     void elegirMovimiento(Action &accion, Sensores sensores);
-    void irHaciaDesconocido (Action &accion, Sensores sensores);
     void actualizarVariablesEstado();
     bool loboCerca(Sensores sensores);
     bool bikiniCercaIZQ(Sensores sensores);
@@ -57,12 +56,7 @@ class ComportamientoJugador : public Comportamiento{
     bool puedoAvanzar(int num, Sensores sensores);
     bool hayHuecoIzquierda (Sensores sensores);
     bool hayHuecoDerecha (Sensores sensores);
-    bool puedoCruzarDiagonalIZQSinZapatillas(Sensores sensores);
-    bool puedoCruzarDiagonalDCHASinZapatillas(Sensores sensores);
-    bool puedoCruzarFrenteSinZapatillas(Sensores sensores);
-    bool puedoCruzarDiagonalIZQSinBikini(Sensores sensores);
-    bool puedoCruzarDiagonalDCHASinBikini(Sensores sensores);
-    bool puedoCruzarFrenteSinBikini(Sensores sensores);
+
 
   private:
 
